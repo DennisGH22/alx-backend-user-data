@@ -72,7 +72,7 @@ class Auth:
             TypeVar('User'): Always returns None.
         """
         return None
-    
+
     def session_cookie(self, request=None):
         """
         Placeholder method to get the session cookie value.

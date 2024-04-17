@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Authentication Class for the API
+Authentication Module for the API
 """
 from flask import request
 from typing import List, TypeVar
@@ -31,7 +31,11 @@ class Auth:
         path = path.rstrip('/') + '/'
 
         for excluded_path in excluded_paths:
-            if path.startswith(excluded_path):
+            if '*' in excluded_path:
+                wildcard_index = excluded_path.index('*')
+                if path.startswith(excluded_path[:wildcard_index]):
+                    return False
+            elif path.startswith(excluded_path):
                 return False
 
         return True

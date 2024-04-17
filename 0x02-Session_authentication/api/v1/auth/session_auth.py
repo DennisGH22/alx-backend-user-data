@@ -3,6 +3,7 @@
 Session Authentication Module for the API
 """
 from api.v1.auth.auth import Auth
+from models.user import User
 from uuid import uuid4
 
 
@@ -31,3 +32,11 @@ class SessionAuth(Auth):
         user_id = self.user_id_by_session_id.get(session_id)
 
         return user_id
+    
+    def current_user(self, request=None) -> User:
+        """ Return a User instance based on a cookie value. """
+        cookie_value = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(cookie_value)
+        user = User.get(id=user_id)
+
+        return user

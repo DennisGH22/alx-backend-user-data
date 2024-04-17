@@ -20,10 +20,9 @@ auth = None
 
 if getenv("AUTH_TYPE") == "session_auth":
     auth = SessionAuth()
-
-if getenv("AUTH_TYPE") == "basic_auth":
+elif getenv("AUTH_TYPE") == "basic_auth":
     auth = BasicAuth()
-else:
+elif getenv("AUTH_TYPE") == "auth":
     auth = Auth()
 
 

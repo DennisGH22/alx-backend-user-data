@@ -81,13 +81,15 @@ class BasicAuth(Auth):
             decoded_base64_authorization_header is None or
             not isinstance(decoded_base64_authorization_header, str)
         ):
+            return None
+
+        colon_index = decoded_base64_authorization_header.find(':')
+
+        if colon_index == -1:
             return None, None
 
-        if ':' not in decoded_base64_authorization_header:
-            return None, None
-
-        user_email, user_password = decoded_base64_authorization_header.split(
-            ':', 1)
+        user_email = decoded_base64_authorization_header[:colon_index]
+        user_password = decoded_base64_authorization_header[colon_index + 1:]
         return user_email, user_password
 
     def user_object_from_credentials(

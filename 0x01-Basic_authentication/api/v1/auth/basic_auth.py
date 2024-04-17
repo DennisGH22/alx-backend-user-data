@@ -113,8 +113,8 @@ class BasicAuth(Auth):
         if not users:
             return None
 
-        for user in users:
-            if user.is_valid_password(user_pwd):
-                return user
+        user = users[0]
+        if not user.is_valid_password(user_pwd):
+            return None
 
-        return None
+        return user

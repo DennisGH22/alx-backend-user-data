@@ -2,6 +2,8 @@
 """
 Basic Authentication Module for the API
 """
+import base64
+from binascii import Error as BinasciiError
 from api.v1.auth.auth import Auth
 
 
@@ -34,3 +36,28 @@ class BasicAuth(Auth):
 
         base64_part = authorization_header.split(' ')[1]
         return base64_part
+
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
+        """
+        Decodes the Base64 string.
+
+        Args:
+            base64_authorization_header (str): The Base64 string.
+
+        Returns:
+            str: The decoded value as UTF-8 string if it's a valid Base64,
+            otherwise None.
+        """
+        if (
+            base64_authorization_header is None or
+            not isinstance(base64_authorization_header, str)
+        ):
+            return None
+
+        try:
+            decoded_bytes = base64.b64decode(base64_authorization_header)
+            decoded_str = decoded_bytes.decode('utf-8')
+            return decoded_str
+        except BinasciiError:
+            return None

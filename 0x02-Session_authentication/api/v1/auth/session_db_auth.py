@@ -16,7 +16,12 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None:
             return None
 
-        user_session = UserSession(session_id=session_id, user_id=user_id)
+        session_dict = {
+            "user_id": user_id,
+            "session_id": session_id
+        }
+
+        user_session = UserSession(**session_dict)
         user_session.save()
 
         return session_id

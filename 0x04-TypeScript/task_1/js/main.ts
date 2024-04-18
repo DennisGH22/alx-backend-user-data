@@ -34,3 +34,38 @@ const teacher3: Teacher = {
 };
 
 console.log(teacher3);
+
+interface Directors extends Teacher {
+    numberOfReports: number;
+}
+
+class Director implements Directors {
+    readonly firstName: string;
+    readonly lastName: string;
+    fullTimeEmployee: boolean;
+    yearsOfExperience?: number;
+    location: string;
+    numberOfReports: number;
+    [key: string]: any;
+
+    constructor(firstName: string, lastName: string, options: TeacherOptions & { numberOfReports: number }) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullTimeEmployee = options.fullTimeEmployee;
+        this.yearsOfExperience = options.yearsOfExperience;
+        this.location = options.location;
+        this.numberOfReports = options.numberOfReports;
+
+        const { fullTimeEmployee, yearsOfExperience, location, numberOfReports, ...additionalAttributes } = options;
+        Object.assign(this, additionalAttributes);
+    }
+}
+
+const director1: Directors = {
+	firstName: 'John',
+	lastName: 'Doe',
+	location: 'London',
+	fullTimeEmployee: true,
+	numberOfReports: 17,
+};
+console.log(director1);

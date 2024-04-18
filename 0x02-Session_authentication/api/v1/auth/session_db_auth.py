@@ -25,7 +25,7 @@ class SessionDBAuth(SessionExpAuth):
         user_session.save()
 
         return session_id
-    
+
     def user_id_for_session_id(self, session_id=None):
         """ Get User ID from the session dictionary. """
         if session_id is None:
@@ -36,7 +36,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         return user_session
-    
+
     def destroy_session(self, request=None):
         """ Destroy the UserSession. """
         if request is None:

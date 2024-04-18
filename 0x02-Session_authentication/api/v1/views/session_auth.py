@@ -24,13 +24,14 @@ def auth_session():
         return jsonify({"error": "password missing"}), 400
 
     try:
-        user = User.search({'email': user_email})
+        users = User.search({'email': user_email})
     except Exception:
         return jsonify({"error": "no user found for this email"}), 404
 
-    if not user:
+    if not users:
         return jsonify({"error": "no user found for this email"}), 404
 
+    user = users[0]
     if not user.is_valid_password(user_password):
         return jsonify({"error": "wrong password"}), 401
 

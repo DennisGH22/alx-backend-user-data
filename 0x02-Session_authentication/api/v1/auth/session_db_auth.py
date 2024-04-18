@@ -26,7 +26,7 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None:
             return None
 
-        user_session = UserSession.get(session_id=session_id)
+        user_session = UserSession.search({"session_id": session_id})
         if user_session is None:
             return None
 
@@ -41,7 +41,7 @@ class SessionDBAuth(SessionExpAuth):
         if session_id is None:
             return False
 
-        user_session = UserSession.get(session_id=session_id)
+        user_session = UserSession.search({"session_id": session_id})
         if user_session:
             user_session.delete()
             return True

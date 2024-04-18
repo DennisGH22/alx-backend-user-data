@@ -35,7 +35,7 @@ class SessionDBAuth(SessionExpAuth):
         if user_session is None:
             return None
 
-        return user_session.user_id
+        return user_session
     
     def destroy_session(self, request=None):
         """ Destroy the UserSession. """

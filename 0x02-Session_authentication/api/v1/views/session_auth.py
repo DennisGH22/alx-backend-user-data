@@ -23,17 +23,18 @@ def auth_session():
     if not password:
         return jsonify({"error": "password missing"}), 400
 
-    user = User.search({"email": email})
+    users = User.search({"email": email})
     if not user:
         return jsonify({"error": "no user found for this email"}), 404
 
-    if not user.is_valid_password(password):
-        return jsonify({"error": "wrong password"}), 401
+    for user in users:
+        if not user.is_valid_password(password):
+            return jsonify({"error": "wrong password"}), 401
 
-    session_id = auth.create_session(user.id)
-    user_json = user.to_json()
+        session_id = auth.create_session(user.id)
+        user_json = user.to_json()
 
-    response = jsonify(user_json)
-    response.set_cookie(getenv("SESSION_NAME"), session_id)
+        response = jsonify(user_json)
+        response.set_cookie(getenv("SESSION_NAME"), session_id)
 
-    return response
+        return response

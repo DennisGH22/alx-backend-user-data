@@ -9,7 +9,7 @@ from models.user import User
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def auth_session() -> str:
+def auth_session():
     """ POST /api/v1/auth_session/login
     Return:
       - the dictionary representation of the User, otherwise status code
@@ -35,7 +35,7 @@ def auth_session() -> str:
 
     response = jsonify(user_json)
     response.set_cookie(
-        getenv("SESSION_NAME", "_my_session_id"), value=session_id
+        getenv("SESSION_NAME"), value=session_id
     )
 
     return response

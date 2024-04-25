@@ -127,4 +127,7 @@ class Auth:
         Returns:
             None
         """
-        self._db.update_user(id=user_id, session_id=None)
+        try:
+            self._db.update_user(id=user_id, session_id=None)
+        except NoResultFound:
+            pass

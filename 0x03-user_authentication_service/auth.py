@@ -128,6 +128,6 @@ class Auth:
             None
         """
         try:
-            self._db.update_user(id=user_id, session_id=None)
+            self._db.update_user(self._db.find_user_by(id=user_id), session_id=None)
         except NoResultFound:
             pass

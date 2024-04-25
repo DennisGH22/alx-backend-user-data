@@ -76,3 +76,23 @@ class DB:
             return session.query(User).filter_by(**criteria).one()
         except NoResultFound:
             raise NoResultFound
+
+    def update_user(self, user_id: int, **updates) -> None:
+        """
+        Update a user with the given user ID and new attributes
+
+        Args:
+            user_id: The ID of the user to update
+            updates: Keyword argument representing the new attributes to update
+
+        Raises:
+            ValueError: If any provided attribute is not valid
+            NoResultFound: If no user is found with the given ID
+        """
+        session = self._session
+        user = self.find_user_by(id=user_id)
+        for field, value in updates.items():
+            if field not in DB_COLUMNS:
+                raise ValueError
+            setattr(user, field, value)
+        session.commit()

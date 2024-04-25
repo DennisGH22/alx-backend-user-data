@@ -72,10 +72,11 @@ class Auth:
         input_password = password.encode()
         return bcrypt.checkpw(input_password, hashed_password)
 
+
 def _generate_uuid() -> str:
     """
     Generate a string representation of a new UUID.
-    
+
     Returns:
         str: The string representation of the generated UUID.
     """

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main file
+End-to-end integration test
 """
 import requests
 import json

@@ -36,7 +36,7 @@ def login():
     email = request.form.get("email")
     password = request.form.get("password")
     if not email or not password:
-        abort(400)
+        abort(401)
 
     if not AUTH.valid_login(email, password):
         abort(401)
@@ -47,7 +47,7 @@ def login():
         response.set_cookie("session_id", session_id)
         return response
     else:
-        abort(500)
+        abort(401)
 
 
 @app.route("/sessions", methods=["DELETE"])

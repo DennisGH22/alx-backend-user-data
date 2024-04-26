@@ -70,7 +70,7 @@ def profile():
     if user:
         return jsonify({"email": user.email}), 200
     else:
-        return jsonify({"message": "User not found"}), 404
+        abort(403)
 
 
 if __name__ == "__main__":

@@ -7,17 +7,20 @@ import json
 
 BASE_URL = "http://localhost:5000"
 
+
 def register_user(email: str, password: str) -> None:
     url = f"{BASE_URL}/users"
     payload = {"email": email, "password": password}
     response = requests.post(url, data=payload)
     assert response.status_code == 200
 
+
 def log_in_wrong_password(email: str, password: str) -> None:
     url = f"{BASE_URL}/sessions"
     payload = {"email": email, "password": password}
     response = requests.post(url, data=payload)
     assert response.status_code == 403
+
 
 def log_in(email: str, password: str) -> str:
     url = f"{BASE_URL}/sessions"
@@ -26,10 +29,12 @@ def log_in(email: str, password: str) -> str:
     assert response.status_code == 200
     return response.cookies.get("session_id")
 
+
 def profile_unlogged() -> None:
     url = f"{BASE_URL}/profile"
     response = requests.get(url)
     assert response.status_code == 403
+
 
 def profile_logged(session_id: str) -> None:
     url = f"{BASE_URL}/profile"
@@ -37,11 +42,13 @@ def profile_logged(session_id: str) -> None:
     response = requests.get(url, cookies=cookies)
     assert response.status_code == 200
 
+
 def log_out(session_id: str) -> None:
     url = f"{BASE_URL}/sessions"
     cookies = {"session_id": session_id}
     response = requests.delete(url, cookies=cookies)
     assert response.status_code == 403
+
 
 def reset_password_token(email: str) -> str:
     url = f"{BASE_URL}/reset_password"
@@ -50,9 +57,14 @@ def reset_password_token(email: str) -> str:
     assert response.status_code == 200
     return json.loads(response.content)["reset_token"]
 
+
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     url = f"{BASE_URL}/reset_password"
-    payload = {"email": email, "reset_token": reset_token, "new_password": new_password}
+    payload = {
+        "email": email,
+        "reset_token": reset_token,
+        "new_password": new_password
+    }
     response = requests.put(url, data=payload)
     assert response.status_code == 200
 
